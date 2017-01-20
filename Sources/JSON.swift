@@ -107,11 +107,13 @@ extension JSONValue: Hashable {
 	}
 }
 
-private protocol JSONKeyType: Hashable {
+private protocol StringType {}
+
+public protocol JSONKeyType: Hashable {
 	var toString: String { get }
 }
 extension String: JSONKeyType {
-	var toString: String { return self }
+	public var toString: String { return self }
 }
 
 public struct JSONValueError: Error, CustomDebugStringConvertible {
@@ -157,7 +159,7 @@ extension JSONValue {
 }
 
 extension Dictionary where Key: JSONKeyType, Value: JSONValueType {
-	init(raw: [Key: Any]) throws {
+	public init(raw: [Key: Any]) throws {
 		self.init()
 		for (key, value) in raw {
 			do {
