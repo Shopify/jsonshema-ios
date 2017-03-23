@@ -8,18 +8,25 @@
 
 import Foundation
 
+public protocol PatternValidatorConvertible {
+    var pattern: String { get }
+}
 
-
-public enum BuiltinStringValidatorsFormats {
-	case email
-	case datetime
-	
-	var pattern: String {
-		switch self {
-		case .email: return "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-		case .datetime: return "\\d{4}\\-\\d{2}\\-\\d{2}T\\d{2}\\:\\d{2}\\:\\d{2}(?:\\.\\d+)?(Z|([+-]\\d{2}\\:\\d{2}))"
-		}
-	}
+public enum BuiltinStringValidatorsFormats: PatternValidatorConvertible {
+    case email
+    case datetime
+    
+    public var pattern: String {
+        switch self {
+        // email format regex
+        case .email: return "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+            //datetime regex as sepcified in http://tools.ietf.org/html/rfc3339
+            //unescaped \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:.\d+)?(Z|([+-]\d{2}\:\d{2}))
+            // e.g. 2017-01-01T01:00:00Z
+        // e.g. 2017-01-01T01:00:00.123+05:00
+        case .datetime: return "\\d{4}\\-\\d{2}\\-\\d{2}T\\d{2}\\:\\d{2}\\:\\d{2}(?:\\.\\d+)?(Z|([+-]\\d{2}\\:\\d{2}))"
+        }
+    }
 }
 
 

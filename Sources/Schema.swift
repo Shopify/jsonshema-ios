@@ -9,18 +9,25 @@
 import Foundation
 
 
-public typealias PropertyListType = Hashable & RawRepresentable
+public typealias PropertyNameType = Hashable & RawRepresentable
 
 public protocol JSONSchemaType: RootScopeValidatorsDSL,
-								StringValidatorsDSL,
-								CombinatoricValidatorsDSL,
-								NumberValidatorsDSL,
-								ArrayValidatorsDSL {
-	
-	associatedtype PropertyList: PropertyListType
-	
-	var properties: [PropertyList: JSONValueValidator] { get }
-	var required: [PropertyList] { get }
-	init()
+    StringValidatorsDSL,
+    CombinatoricValidatorsDSL,
+    NumberValidatorsDSL,
+ArrayValidatorsDSL {
+    
+    associatedtype PropertyName: PropertyNameType
+    
+    var properties: [PropertyName: JSONValueValidator] { get }
+    var required: [PropertyName] { get }
+    var dependencies: [PropertyName: [PropertyName]] { get }
+    init()
+}
+
+extension JSONSchemaType {
+    public var dependencies: [PropertyName: [PropertyName]] {
+        return [:]
+    }
 }
 
