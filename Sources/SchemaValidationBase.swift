@@ -50,11 +50,24 @@ struct PropertyValueValidationError: Error, CustomStringConvertible {
     }
 }
 
+struct AdditionalPropertiesValidationError: Error, CustomStringConvertible {
+    private var propertieNames: [String]
+    
+    init(propertiesNames: [String]) {
+        self.propertieNames = propertiesNames
+    }
+    
+    var description: String {
+        return "Additional properties that should not be present \(propertieNames.joined(separator: ","))"
+    }
+}
 
 extension JSONSchemaType where PropertyName.RawValue == String {
     
     func validate(against json: JSONObject) throws -> [PropertyName: Any] {
         var validated:[PropertyName: Any] = [:]
+        
+        var additionalProperties: [String: Any] = [:]
         
         for (key, value) in json {
             if let propertyName = PropertyName(rawValue: key),
@@ -66,8 +79,11 @@ extension JSONSchemaType where PropertyName.RawValue == String {
                     throw PropertyValueValidationError(property: key, value: "\(value.asRaw())", error: error)
                 }
                 
+            } else {
+                additionalProperties[key] = value
             }
         }
+        
         let presentKeys = Set(json.keys.map(PropertyName.init).flatMap { $0 } )
         var requiredKeys = Set(self.required)
         
@@ -84,6 +100,9 @@ extension JSONSchemaType where PropertyName.RawValue == String {
             throw RequiredFieldsMissingError(missingKeys: missingKeysArray, for: self)
         }
         
+        if additionalProperties.count > 0 && !self.additionalProperties  {
+            throw AdditionalPropertiesValidationError(propertiesNames: Array(additionalProperties.keys))
+        }
         return validated
     }
 }

@@ -49,4 +49,29 @@ class SchemaValidationTests: XCTestCase {
 		XCTAssertThrowsError(_ = try schema.validate(against: ["a": .number(1), "c": .number(0)]))
 		XCTAssertThrowsError(_ = try schema.validate(against: ["a": .number(1), "c": .string("1")]))		
 	}
+  
+    struct FailingSchema: JSONSchemaType {
+        enum PropertyName: String {
+            case a
+        }
+        
+        var properties: [PropertyName: JSONValueValidator] {
+            return [
+                .a: number()
+            ]
+        }
+        let required: [PropertyName]  = [.a]
+        let additionalProperties: Bool = false
+    }
+    
+    func testAdditionalProperties() {
+        let schema = DummySchema()
+        XCTAssertNoThrow(_ = try schema.validate(against: ["a": .number(1), "b": .string("1")]))
+        XCTAssertNoThrow(_ = try schema.validate(against: ["a": .number(1), "b": .string("1"), "asasd": .null]))
+        
+        let failingSchema = FailingSchema()
+        
+        XCTAssertThrowsError(_ = try failingSchema.validate(against: ["a": .number(1), "asasd": .null]))
+
+    }
 }

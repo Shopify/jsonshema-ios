@@ -12,7 +12,7 @@ import XCTest
 func XCTAssertNoThrow(_ expression: @autoclosure () throws -> (), file: StaticString = #file, line: UInt = #line) {
 	do {
 		try expression()
-	} catch { XCTFail(file: file, line: line) }
+    } catch (let e as Error) { XCTFail("\(e)", file: file, line: line) }
 }
 
 class TypeValidatorsTests: XCTestCase,

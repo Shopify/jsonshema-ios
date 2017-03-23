@@ -22,12 +22,17 @@ ArrayValidatorsDSL {
     var properties: [PropertyName: JSONValueValidator] { get }
     var required: [PropertyName] { get }
     var dependencies: [PropertyName: [PropertyName]] { get }
+    var additionalProperties: Bool { get }
     init()
 }
 
 extension JSONSchemaType {
     public var dependencies: [PropertyName: [PropertyName]] {
         return [:]
+    }
+    
+    var additionalProperties: Bool {
+        return true
     }
 }
 

@@ -13,6 +13,7 @@
 		A5791D791E841EA90046786B /* ObjectValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5791D741E841EA90046786B /* ObjectValidatorTests.swift */; };
 		A5791D7A1E841EA90046786B /* ArrayValidatorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5791D751E841EA90046786B /* ArrayValidatorsTests.swift */; };
 		A5791D7B1E841EA90046786B /* SchemaValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5791D761E841EA90046786B /* SchemaValidationTests.swift */; };
+		A5791D7C1E8424810046786B /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* JSONSchema.framework */; };
 		OBJ_24 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* JSON.swift */; };
 		OBJ_25 /* SafeJSONSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* SafeJSONSerializable.swift */; };
 		OBJ_26 /* Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* Schema.swift */; };
@@ -37,7 +38,7 @@
 		OBJ_13 /* SchemaValidationBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaValidationBase.swift; sourceTree = "<group>"; };
 		OBJ_14 /* StringValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringValidation.swift; sourceTree = "<group>"; };
 		OBJ_15 /* ValidationErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationErrors.swift; sourceTree = "<group>"; };
-		OBJ_18 /* JSONSchema.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JSONSchema.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		OBJ_18 /* JSONSchema.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = JSONSchema.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		OBJ_9 /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -47,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5791D7C1E8424810046786B /* JSONSchema.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +275,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.JSONSchemaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 3.0;
 			};
@@ -319,6 +322,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.JSONSchemaTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
@@ -341,6 +345,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = JSONSchema;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGET_NAME = JSONSchema;
 			};
 			name = Debug;
@@ -361,6 +366,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = JSONSchema;
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGET_NAME = JSONSchema;
 			};
 			name = Release;

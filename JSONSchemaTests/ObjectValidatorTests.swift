@@ -42,5 +42,4 @@ class ObjectValidatorTests: XCTestCase,
 		XCTAssertThrowsError(try validator(["a": .string(""), "b": .null]))
     }
     
-	
 }
