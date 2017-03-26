@@ -74,4 +74,36 @@ class SchemaValidationTests: XCTestCase {
         XCTAssertThrowsError(_ = try failingSchema.validate(against: ["a": .number(1), "asasd": .null]))
 
     }
+    
+    
+    struct PatternPropertySchema: JSONSchemaType {
+        enum PropertyName: String {
+            case a
+        }
+        
+        var properties: [PropertyName: JSONValueValidator] {
+            return [
+                .a: number()
+            ]
+        }
+        let required: [PropertyName]  = [.a]
+        var patternProperties: [PatternPropertyName: JSONValueValidator] {
+            return [
+                PatternPropertyName(pattern: "^S_.*"): string()
+            ]
+        }
+        
+    }
+    func testPatternPropertyValidation() {
+        let schema = PatternPropertySchema()
+        XCTAssertNoThrow(_ = try schema.validate(against: ["a": .number(1)]))
+        XCTAssertNoThrow(_ = try schema.validate(against: ["a": .number(1), "b": .string("1")]))
+        XCTAssertNoThrow(_ = try schema.validate(against: ["a": .number(1), "S_somethig": .string("1")]))
+        XCTAssertNoThrow(_ = try schema.validate(against: ["a": .number(1), "S_": .string("1")]))
+        XCTAssertNoThrow(_ = try schema.validate(against: ["a": .number(1), "S_aa": .string("1")]))
+        
+        XCTAssertThrowsError(_ = try schema.validate(against: ["a": .number(1), "S_somethig": .null]))
+        XCTAssertThrowsError(_ = try schema.validate(against: ["a": .number(1), "S_": .null]))
+        XCTAssertThrowsError(_ = try schema.validate(against: ["a": .number(1), "S_1": .null]))
+    }
 }
