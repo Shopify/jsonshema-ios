@@ -28,7 +28,7 @@ public protocol SafeJSONSerializable {
      
      - Throws: deserizliation of nested objects may follow it's own schema validatio, that in turn can throw.
      */
-    static func fromValidatedJSON(json: [Schema.PropertyName: Any]) throws -> Self
+    static func fromValidatedJSON(json: ValidatedJSON<Schema.PropertyName>) throws -> Self
 }
 
 
