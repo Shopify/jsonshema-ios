@@ -26,7 +26,7 @@ class SchemaValidationTests: XCTestCase {
 			]
 		}
 		let required: [PropertyName]  = [.a]
-		let dependencies: [PropertyName: [PropertyName]] = [.a: [.b]]
+		let dependencies: [PropertyName: PropertyDependency<PropertyName>] = [.a: .property([.b])]
 	}
 	
     func testRequiredKeysValidation() {
@@ -39,7 +39,7 @@ class SchemaValidationTests: XCTestCase {
     }
     
 
-	func testDependenciesValidation() {
+	func testPropertyDependenciesValidation() {
 		let schema = DummySchema()
 		
 		XCTAssertNoThrow(_ = try schema.validate(against: ["a": .number(1), "b": .string("1")]))
@@ -50,6 +50,50 @@ class SchemaValidationTests: XCTestCase {
 		XCTAssertThrowsError(_ = try schema.validate(against: ["a": .number(1), "c": .string("1")]))		
 	}
   
+    
+
+    struct SchemaDependencySchema: JSONSchemaType {
+        
+        struct SubSchema: JSONSchemaType {
+            public typealias PropertyName = SchemaDependencySchema.PropertyName
+            
+            var properties: [PropertyName: JSONValueValidator] {
+                return [
+                    .b: string(),
+                ]
+            }
+            let required:[PropertyName] = [.b]
+        }
+        
+        enum PropertyName: String {
+            case a
+            case b
+            case c
+        }
+        
+        var properties: [PropertyName: JSONValueValidator] {
+            return [
+                .a: number(),
+                .c: string()
+            ]
+        }
+        let dependencies: [PropertyName: PropertyDependency<PropertyName>] = [.a: .schema(SubSchema().asExtension)]
+    }
+    
+    func testSchemaDependenciesValidation() {
+        
+        let schema = SchemaDependencySchema()
+        XCTAssertNoThrow(_ = try schema.validate(against: ["c": .string("1")]))
+        XCTAssertNoThrow(_ = try schema.validate(against: ["a": .number(1), "b": .string("1"), "c": .string("1")]))
+
+        XCTAssertThrowsError(_ = try schema.validate(against: ["a": .number(1)]))
+        XCTAssertThrowsError(_ = try schema.validate(against: ["a": .number(1), "b": .null, "c": .string("1")]))
+        
+        var validated: ValidatedJSON<SchemaDependencySchema.PropertyName>!
+        XCTAssertNoThrow(validated = try schema.validate(against: ["a": .number(1), "b": .string("1"), "c": .string("1")]))
+        XCTAssert(validated[.b] as? String == "1")
+    }
+    
     struct FailingSchema: JSONSchemaType {
         enum PropertyName: String {
             case a

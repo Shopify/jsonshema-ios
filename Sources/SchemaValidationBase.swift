@@ -124,8 +124,16 @@ public struct ValidatedJSON<PropertyName: PropertyNameType>  {
     public subscript(key: String) -> Any? {
         return storage[.unspecified(key)]
     }
+    
+    mutating func merge(with another: ValidatedJSON<PropertyName>) {
+        for (key, value) in another.storage {
+            storage[key] = value
+        }
+    }
 
 }
+
+
 
 extension JSONSchemaType where PropertyName.RawValue == String {
     
@@ -167,15 +175,42 @@ extension JSONSchemaType where PropertyName.RawValue == String {
         
         let dependencyKeys = Set(self.dependencies.keys)
         
-        let keysRequiredByDependencies = dependencyKeys
-            .intersection(presentKeys)
-            .flatMap { self.dependencies[$0]! }
+        func extractDependencyProperties(deps: PropertyDependency<PropertyName>) -> [PropertyName] {
+            if case .property(let p) = deps {
+                return p
+            } else {
+                return []
+            }
+        }
+        
+        func extractDependencySchemas(deps: PropertyDependency<PropertyName>) -> SchemaExtension<PropertyName>? {
+            if case .schema(let s) = deps {
+                return s
+            } else {
+                return nil
+            }
+        }
+        
+        let requiredDependencies = dependencyKeys.intersection(presentKeys)
+            .map { self.dependencies[$0]! }
+        let keysRequiredByDependencies:[PropertyName]  = requiredDependencies
+            .flatMap(extractDependencyProperties)
+            .flatMap { $0 }
+        
+        let requiredDependencySchemas = requiredDependencies
+            .map(extractDependencySchemas)
+            .flatMap { $0 }
         
         requiredKeys.formUnion(keysRequiredByDependencies)
         
         if !requiredKeys.isSubset(of: presentKeys) {
             let missingKeysArray = Array(requiredKeys.subtracting(presentKeys)).map { $0.rawValue }
             throw RequiredFieldsMissingError(missingKeys: missingKeysArray, for: self)
+        }
+        
+        for schema in requiredDependencySchemas {
+            let extracted = try schema.validator(json)
+            validated.merge(with: extracted)
         }
         
         if additionalProperties.count > 0 && !self.additionalProperties  {
