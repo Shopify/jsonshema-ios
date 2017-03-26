@@ -32,6 +32,14 @@ extension JSONSchemaType {
         return [:]
     }
     
+    var properties: [PropertyName] {
+        return []
+    }
+    
+    var required: [PropertyName] {
+        return []
+    }
+    
     var additionalProperties: Bool {
         return true
     }
