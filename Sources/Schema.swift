@@ -11,6 +11,20 @@ import Foundation
 
 public typealias PropertyNameType = Hashable & RawRepresentable
 
+
+
+public struct SchemaExtension<P: PropertyNameType>  {
+    let validator: (JSONObject) throws -> ValidatedJSON<P>
+    init(validator: @escaping (JSONObject) throws -> ValidatedJSON<P>)   {
+        self.validator = validator
+    }
+}
+
+public enum PropertyDependency<PropertyName: PropertyNameType>  {
+    case property([PropertyName])
+    case schema(SchemaExtension<PropertyName>)
+}
+
 public protocol JSONSchemaType: RootScopeValidatorsDSL,
     StringValidatorsDSL,
     CombinatoricValidatorsDSL,
@@ -21,14 +35,14 @@ ArrayValidatorsDSL {
     
     var properties: [PropertyName: JSONValueValidator] { get }
     var required: [PropertyName] { get }
-    var dependencies: [PropertyName: [PropertyName]] { get }
+    var dependencies: [PropertyName: PropertyDependency<PropertyName>] { get }
     var additionalProperties: Bool { get }
     var patternProperties: [PatternPropertyName: JSONValueValidator] { get }
     init()
 }
 
 extension JSONSchemaType {
-    public var dependencies: [PropertyName: [PropertyName]] {
+    public var dependencies: [PropertyName: PropertyDependency<PropertyName>] {
         return [:]
     }
     
@@ -46,6 +60,12 @@ extension JSONSchemaType {
     
     var patternProperties: [PatternPropertyName: JSONValueValidator] {
         return [:]
+    }
+}
+
+extension JSONSchemaType where PropertyName.RawValue == String {
+    var asExtension: SchemaExtension<PropertyName> {
+        return SchemaExtension(validator: self.validate(against:))
     }
 }
 
