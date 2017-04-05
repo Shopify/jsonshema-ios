@@ -14,6 +14,9 @@
 		A5791D7A1E841EA90046786B /* ArrayValidatorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5791D751E841EA90046786B /* ArrayValidatorsTests.swift */; };
 		A5791D7B1E841EA90046786B /* SchemaValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5791D761E841EA90046786B /* SchemaValidationTests.swift */; };
 		A5791D7C1E8424810046786B /* JSONSchema.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* JSONSchema.framework */; };
+		A5B13A671E94943C00DD0B03 /* NSNumber+BoolExtraction.m in Sources */ = {isa = PBXBuildFile; fileRef = A5B13A661E94943C00DD0B03 /* NSNumber+BoolExtraction.m */; };
+		A5B13A6D1E9497ED00DD0B03 /* NSNumber+BoolExtraction.h in Headers */ = {isa = PBXBuildFile; fileRef = A5B13A651E94943C00DD0B03 /* NSNumber+BoolExtraction.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A5B13A6F1E94987600DD0B03 /* JSONSchema.h in Headers */ = {isa = PBXBuildFile; fileRef = A5B13A6E1E94987600DD0B03 /* JSONSchema.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		OBJ_24 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* JSON.swift */; };
 		OBJ_25 /* SafeJSONSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* SafeJSONSerializable.swift */; };
 		OBJ_26 /* Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* Schema.swift */; };
@@ -32,6 +35,9 @@
 		A5791D741E841EA90046786B /* ObjectValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectValidatorTests.swift; sourceTree = "<group>"; };
 		A5791D751E841EA90046786B /* ArrayValidatorsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayValidatorsTests.swift; sourceTree = "<group>"; };
 		A5791D761E841EA90046786B /* SchemaValidationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchemaValidationTests.swift; sourceTree = "<group>"; };
+		A5B13A651E94943C00DD0B03 /* NSNumber+BoolExtraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+BoolExtraction.h"; sourceTree = "<group>"; };
+		A5B13A661E94943C00DD0B03 /* NSNumber+BoolExtraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+BoolExtraction.m"; sourceTree = "<group>"; };
+		A5B13A6E1E94987600DD0B03 /* JSONSchema.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONSchema.h; sourceTree = "<group>"; };
 		OBJ_10 /* SafeJSONSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeJSONSerializable.swift; sourceTree = "<group>"; };
 		OBJ_11 /* Schema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schema.swift; sourceTree = "<group>"; };
 		OBJ_12 /* SchemaDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaDSL.swift; sourceTree = "<group>"; };
@@ -85,7 +91,7 @@
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -93,7 +99,6 @@
 				A5791D691E841DF10046786B /* JSONSchemaTests */,
 				OBJ_17 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -107,6 +112,9 @@
 		OBJ_8 /* JSONSchema */ = {
 			isa = PBXGroup;
 			children = (
+				A5B13A6E1E94987600DD0B03 /* JSONSchema.h */,
+				A5B13A651E94943C00DD0B03 /* NSNumber+BoolExtraction.h */,
+				A5B13A661E94943C00DD0B03 /* NSNumber+BoolExtraction.m */,
 				OBJ_9 /* JSON.swift */,
 				OBJ_10 /* SafeJSONSerializable.swift */,
 				OBJ_11 /* Schema.swift */,
@@ -120,6 +128,18 @@
 			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		A5B13A691E9495AA00DD0B03 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5B13A6F1E94987600DD0B03 /* JSONSchema.h in Headers */,
+				A5B13A6D1E9497ED00DD0B03 /* NSNumber+BoolExtraction.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		A5791D671E841DF10046786B /* JSONSchemaTests */ = {
@@ -143,6 +163,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = OBJ_20 /* Build configuration list for PBXNativeTarget "JSONSchema" */;
 			buildPhases = (
+				A5B13A691E9495AA00DD0B03 /* Headers */,
 				OBJ_23 /* Sources */,
 				OBJ_31 /* Frameworks */,
 			);
@@ -169,6 +190,9 @@
 						DevelopmentTeam = A7XGC83MZE;
 						ProvisioningStyle = Automatic;
 					};
+					OBJ_19 = {
+						LastSwiftMigration = 0820;
+					};
 				};
 			};
 			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "JSONSchema" */;
@@ -178,7 +202,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_17 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -223,6 +247,7 @@
 				OBJ_27 /* SchemaDSL.swift in Sources */,
 				OBJ_28 /* SchemaValidationBase.swift in Sources */,
 				OBJ_29 /* StringValidation.swift in Sources */,
+				A5B13A671E94943C00DD0B03 /* NSNumber+BoolExtraction.m in Sources */,
 				OBJ_30 /* ValidationErrors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -332,6 +357,9 @@
 		OBJ_21 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -346,6 +374,8 @@
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGET_NAME = JSONSchema;
 			};
 			name = Debug;
@@ -353,6 +383,9 @@
 		OBJ_22 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -367,6 +400,7 @@
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_VERSION = 3.0;
 				TARGET_NAME = JSONSchema;
 			};
 			name = Release;
@@ -423,6 +457,7 @@
 				A5791D6E1E841DF10046786B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 		OBJ_2 /* Build configuration list for PBXProject "JSONSchema" */ = {
 			isa = XCConfigurationList;

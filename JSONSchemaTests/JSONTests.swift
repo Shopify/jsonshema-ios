@@ -48,8 +48,58 @@ class JSONTests: XCTestCase {
 		}
 	}
 	
+    func testJSONWrapping() {
+        enum WrappedType {
+            case null, bool, number, string, array, object
+        }
+        func test(value: JSONValue, is type: WrappedType) -> Bool {
+            switch (value, type) {
+            case (.null, .null),
+                 (.boolean, .bool),
+                 (.number, .number),
+                 (.string, .string),
+                 (.array, .array),
+                 (.object, .object): return true
+            default:
+                print("\(value) : \(type)")
+                return false
+            }
+        }
+        
+        XCTAssert(test(value: try! JSONValue(raw: NSNull()), is: .null))
+        for other in [WrappedType.bool, .number, .string, .array, .object] {
+            XCTAssertFalse(test(value: try! JSONValue(raw: NSNull()), is: other))
+        }
+        
+        XCTAssert(test(value: try! JSONValue(raw: true), is: .bool))
+        for other in [WrappedType.null, .number, .string, .array, .object] {
+            XCTAssertFalse(test(value: try! JSONValue(raw: true), is: other))
+        }
+        
+        XCTAssert(test(value: try! JSONValue(raw: 1), is: .number))
+        for other in [WrappedType.null, .bool, .string, .array, .object] {
+            XCTAssertFalse(test(value: try! JSONValue(raw: 1), is: other))
+        }
+        
+        XCTAssert(test(value: try! JSONValue(raw: "1"), is: .string))
+        for other in [WrappedType.null, .bool, .number, .array, .object] {
+            XCTAssertFalse(test(value: try! JSONValue(raw: "1"), is: other))
+        }
+
+        XCTAssert(test(value: try! JSONValue(raw: ["1"]), is: .array))
+        for other in [WrappedType.null, .bool, .number, .string, .object] {
+            XCTAssertFalse(test(value: try! JSONValue(raw: ["1"]), is: other))
+        }
+
+        XCTAssert(test(value: try! JSONValue(raw: ["1": "1"]), is: .object))
+        for other in [WrappedType.null, .bool, .number, .string, .array] {
+            XCTAssertFalse(test(value: try! JSONValue(raw: ["1": "1"]), is: other))
+        }
+
+    }
+    
 	func testJSONValueUnwrapping() {
-		
+
 		XCTAssertEqual(JSONValue.number(1).asNumber(), 1)
 		XCTAssertEqual(JSONValue.number(1).asString(), nil)
 		XCTAssertEqual(JSONValue.number(1).asBool(), nil)

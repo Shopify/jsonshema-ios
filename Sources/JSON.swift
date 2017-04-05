@@ -141,9 +141,11 @@ extension JSONValue {
         if let str = raw as? String {
             self = .string(str)
         } else if let number = raw as? NSNumber {
-            self = .number(number)
-        } else if let bool = raw as? Bool {
-            self = .boolean(bool)
+            if number.isObjcBool() {
+                self = .boolean(number.boolValue)
+            } else {
+                self = .number(number)
+            }
         } else if let rawObject = raw as? [String: Any] {
             self = try .object(JSONObject(raw: rawObject))
         } else if let rawArray = raw as? Array<Any> {
