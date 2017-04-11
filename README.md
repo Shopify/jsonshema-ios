@@ -118,9 +118,12 @@ Logical combination of given set of validators.
 - `noneOf`
 
 # Credits
-`ImageViewModel` created by Sergey Gavrilyuk [@octogavrix](http://twitter.com/octogavrix).
+`JSONSchema` created by Sergey Gavrilyuk [@octogavrix](http://twitter.com/octogavrix).
 
 
 ## License
-`ImageViewModel` is distributed under MIT license. See LICENSE for more info.
+`JSONSchema` is distributed under MIT license. See LICENSE for more info.
+
+## Contributing
+Fork, branch & pull request.
 
